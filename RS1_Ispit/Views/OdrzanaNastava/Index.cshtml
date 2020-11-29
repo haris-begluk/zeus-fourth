@@ -1,0 +1,37 @@
+﻿@model IEnumerable<RS1_Ispit_asp.net_core.ViewModels.IndexVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+
+            <th>
+                Ime i Prezime Nastavnika
+            </th>
+            <th>
+                Broj Odrzanih Casova
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImePrezime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrojOdrzanihCasova)
+                </td>
+                <td>
+                    <a  href="~/OdrzanaNastava/Casovi?id=@item.NastavnikId" style="text-decoration:none; font-weight:bold;">Odaberi</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

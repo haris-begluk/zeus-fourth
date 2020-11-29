@@ -1,0 +1,29 @@
+﻿@model RS1_Ispit_asp.net_core.ViewModels.DodajCasVM
+    <h2>Dodavanje novog casa</h2>
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <form asp-action="DodajCas">
+                <input asp-for="NastavnikId" hidden />
+
+                <div class="form-group">
+                    <label asp-for="ImePrezime" class="control-label"></label>
+                    <input style="font-weight:bold;" asp-for="ImePrezime" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Datum" class="control-label"></label>
+                    <input asp-for="Datum" asp-format="{0:dd.MM.yyyy}" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="ListId" class="control-label"></label>
+                    <select asp-for="ListId" class="form-control" asp-items="@Model.SkolaOdjeljenjePredmet.Select(s => new SelectListItem { Value = s.Id, Text = s.Text})"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SadrzajCasa" class="control-label"></label>
+                    <textarea class="form-control" rows="7"  asp-for="SadrzajCasa" ></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Snimi" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>

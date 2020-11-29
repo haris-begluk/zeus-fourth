@@ -1,0 +1,61 @@
+﻿@model RS1_Ispit_asp.net_core.ViewModels.OdrzaniCasoviVM
+
+@{
+    ViewData["Title"] = "Casovi";
+}
+
+<h2>Casovi</h2>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+
+            <th>
+                Datum
+            </th>
+            <th>
+                Skola
+            </th>
+            <th>
+                SkolskaGodina/Odjeljenje
+            </th>
+            <th>
+                Predmet
+            </th>
+            <th>
+                Odsutni Ucenici**
+            </th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Casovi)
+        {
+            <tr>
+
+                <td>
+                    @item.Datum.ToString("dd.MM.yyyy.")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Skola)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SkolskaGodina)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Predmet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OdsutniUcenici)
+                </td>
+                <td>
+                    <a href="~/OdrzanaNastava/Detalji?id=@item.Id">Detalji**</a> |
+                    <a href="">Obrisi</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button ajax-poziv="da" ajax-url="/OdrzanaNastava/DodajCas?id=@Model.NastavnikId" ajax-rezultat="dodajCas">Dodaj</button> 
+<div id="dodajCas"></div>

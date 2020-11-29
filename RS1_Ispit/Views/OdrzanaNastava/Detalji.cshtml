@@ -1,0 +1,105 @@
+﻿@model RS1_Ispit_asp.net_core.ViewModels.DetaljiVM
+<div class="row">
+    <h4>DetaljiVM</h4>
+    <hr />
+    <style>
+        dt {
+            width: auto !important;
+        }
+    </style>
+    <dl class="dl-horizontal col-md-12 col-sm-12">
+        <dt>
+            Datum:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Datum, new { disabled = "disabled", @readonly = "readonly" })
+        <dt>
+            Skola Odjeljenje Predmet:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SkolaOdjeljenjePredmet, new { disabled = "disabled", @readonly = "readonly" })
+        </dd>
+        <dt>
+            Sadrzaj Casa:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SadrzajCasa, new { disabled = "disabled", @readonly = "readonly" })
+        </dd>
+    </dl>
+
+    <hr />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+
+                <th>
+                    Ucenik
+                </th>
+                <th>
+                    Ocjena
+                </th>
+                <th>
+                    Prisutan
+                </th>
+                <th>
+                    Opravdano Odsutan
+                </th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Ucenici.Count(); i++)
+
+            {
+                <tr>
+
+                    <td>
+                        @($"{(i+1).ToString()}.{Model.Ucenici[i].Ucenik}")
+                    </td>
+                    <td>
+                        @if (Model.Ucenici[i].Prisutan)
+                        {
+                            <input class="bodovi" id="@Model.Ucenici[i].Id" min="1" max="5" name="name" asp-for="@Model.Ucenici[i].Ocjena" />
+                        }
+                        else
+                        {
+                            <span>X</span>
+                        }
+                    </td>
+                    <td>
+                        <a class="prisutan" ajax-poziv="da" href="/OdrzanaNastava/Prisutan?id=@Model.Ucenici[i].Id" ajax-rezultat="none" style="text-decoration:none; font-weight:bold; color:white; background-color:@(Model.Ucenici[i].Prisutan?"Green":"Red")">@(Model.Ucenici[i].Prisutan?"Prisutan":"Odsutam")</a>
+                    </td>
+                    <td>
+                        @if (!Model.Ucenici[i].Prisutan)
+                        {
+                            <span>@(Model.Ucenici[i].Opravdano?"DA":"NE")</span>
+                        }
+                    </td>
+                    <td>
+                        <a ajax-poziv="da" href="/OdrzanaNastava/Uredi?id=@Model.Ucenici[i].Id" ajax-rezultat="uredi" style="text-decoration:none;font-weight:bold;">Uredi</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <div id="uredi"></div>
+</div>
+<script>
+    $(".prisutan").mouseup(function (event) {
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
+    });
+    $(".bodovi").keyup(function (event) {
+        setTimeout(function () {
+            $.ajax({
+                type: "GET",
+                url: "/OdrzanaNastava/Ocjena?id=" + event.target.id + "&bodovi=" + event.target.value,
+                success: function () {
+                    window.location.reload();
+                }
+            });
+        }, 500);
+    });
+</script>

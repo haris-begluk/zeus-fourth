@@ -1,0 +1,48 @@
+﻿@model RS1_Ispit_asp.net_core.ViewModels.UrediVM
+
+<h4>Uredi</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form ajax-poziv="da" action="/OdrzanaNastava/Uredi" ajax-rezultat="none">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="UcenikId" hidden />
+            <div class="form-group">
+                <label asp-for="Ucenik" class="control-label"></label>
+                <input asp-for="Ucenik" class="form-control" />
+                <span asp-validation-for="Ucenik" class="text-danger"></span>
+            </div>
+            @if (Model.Prisutan)
+            {
+
+                <div class="form-group">
+                    <label asp-for="Ocjena" class="control-label"></label>
+                    <input asp-for="Ocjena" class="form-control" />
+                    <span asp-validation-for="Ocjena" class="text-danger"></span>
+                </div>
+
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="Napomena" class="control-label"></label>
+                    <textarea asp-for="Napomena" row="4" class="form-control"></textarea>
+                    <span asp-validation-for="Napomena" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="OpravdanoOdsutan" /> @Html.DisplayNameFor(model => model.OpravdanoOdsutan)
+                        </label>
+                    </div>
+                </div>
+
+            }
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
